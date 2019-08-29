@@ -12,7 +12,7 @@ app.get('*', function getjs(req, res, next) {
 files.forEach(function(item,index){
   console.log(`.${path}`)
   if(item==name){
-    if(name.slice(-2)=='gz'){
+    if(name.slice(-3)=='.gz'){
       fs.readFile(`.${path}`,function(err,data){
         res.writeHeader(200,{'Content-Encoding':'gzip','Content-Type':'application/octet-stream'})
         res.write(data)

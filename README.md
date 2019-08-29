@@ -27,9 +27,8 @@ LoadModule headers_module modules/mod_headers.so
 # nodejs
 **执行 server.js 脚本即可:**
 ```
-node server.js
+$ node server.js
 ```
-此脚本依赖 express 框架。
 # iis
 **在存在.gz文件的目录中添加配置文件 web.config，内容如下：**
 ```xml
