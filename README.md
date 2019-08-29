@@ -3,7 +3,7 @@
 *如何自定义.gz文件的响应头，不同WEB服务器的配置方法不一样。下面列举了常见的几种服务器的配置方法，以供参考。*
 # ngnix
 * 修改配置文件 nginx.conf
-   * 在http/server里面添加一个location节点，内容如下：
+   1. 在http/server里面添加一个location节点，内容如下：
 ```
 		location ~* .*\.gz$ {
 			root       /databags; # 数据包所在目录
@@ -12,15 +12,17 @@
 ```
 # apache
 * 修改配置文件 httpd.conf
-   * 加载 headers_module，即去掉此行前面的注释符号#：
+   1. 加载 headers_module，即去掉此行前面的注释符号#：
 ```
 LoadModule headers_module modules/mod_headers.so
 ```
-   * 在<IfModule headers_module>小节中添加：
+   2. 在<IfModule headers_module>小节中添加 FilesMatch：
 ```
-    <filesmatch "\.(gz)$">
+<IfModule headers_module>
+    <FilesMatch "\.(gz)$">
         header set Content-Encoding "gzip"
     </FilesMatch>
+</IfModule>
 ```
 # nodejs
 # iis
