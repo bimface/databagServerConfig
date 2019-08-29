@@ -29,6 +29,7 @@ LoadModule headers_module modules/mod_headers.so
 ```
 $ node server.js
 ```
+\* 已提供 server.js 文件
 # iis
 **在存在.gz文件的目录中添加配置文件 web.config，内容如下：**
 ```xml
