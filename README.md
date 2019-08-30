@@ -25,13 +25,44 @@ LoadModule headers_module modules/mod_headers.so
 </IfModule>
 ```
 # nodejs
-**执行 server.js 脚本即可:**
+**参考以下 server.js 代码，为.gz文件添加 Content-Encoding 头:**
+```js
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const app = express();
+
+app.get('*', function getjs(req, res, next) {
+  var path = req.path,
+  arr = path.split('/'),
+  dir = arr.slice(0,arr.length-1).join('/'),
+  name = arr[arr.length-1];
+  var files=fs.readdirSync(`./${dir}`);
+files.forEach(function(item,index){
+  console.log(`.${path}`)
+  if(item==name){
+    if(name.slice(-3)=='.gz'){
+      fs.readFile(`.${path}`,function(err,data){
+        res.writeHeader(200,{'Content-Encoding':'gzip','Content-Type':'application/octet-stream'})
+        res.write(data)
+      res.end();
+      })    
+    }else{
+      res.sendFile(`${__dirname}${path}`);
+    }
+    return
+  }
+})
+
+})
+
+app.listen(8080, () => {
+  console.log('ok')
+})
 ```
-$ node server.js
-```
-\* 已提供 server.js 文件
 # iis
-**在存在.gz文件的目录中添加配置文件 web.config，内容如下：**
+$\color{red}{* 我们已经事先给每个离线数据包做好了此配置，如果你使用iis服务器则不需要再做此配置。}$  
+**在含有.gz文件的目录中添加配置文件 web.config，内容如下：**
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
@@ -44,4 +75,3 @@ $ node server.js
     </system.webServer>
 </configuration>
 ```
-$\color{red}{每个离线数据包都已经事先添加好了配置文件 web.config，如果使用iis服务器不需要额外配置。}$
