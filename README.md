@@ -1,6 +1,7 @@
-<p style="text-indent:2em">BIMFACE的离线数据包中含有一些预先压缩好的.gz文件，而实际浏览模型时需要的是解压后的文件。
-为了能够正常浏览模型，需要在.gz文件的响应头(Response Headers)中加上“Content-Encoding: gzip”，这样浏览器在获取到这些.gz文件后就会自动作解压处理。</p>
-<p style="text-indent:2em">如何自定义.gz文件的响应头？不同WEB服务器的配置方法不一样，下面列举了几种常见的服务器的配置方法，以供参考。</p>
+&emsp;&emsp;BIMFACE的离线数据包中含有一些预先压缩好的.gz文件，而实际浏览模型时需要的是解压后的文件。
+为了能够正常浏览模型，需要在.gz文件的响应头(Response Headers)中加上“Content-Encoding: gzip”，这样浏览器在获取到这些.gz文件后就会自动作解压处理。
+
+&emsp;&emsp;如何自定义.gz文件的响应头？不同WEB服务器的配置方法不一样，下面列举了几种常见的服务器的配置方法，以供参考。
 
 # ngnix
 **修改配置文件 nginx.conf**  
