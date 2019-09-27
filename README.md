@@ -62,6 +62,51 @@ app.listen(8080, () => {
   console.log('ok')
 })
 ```
+# tomcat
+**写一个Filter，导出成 jar 后，放到 tomcat\lib 目录下**
+```java
+package cn.common.java.utility;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class gzipFilter implements Filter {
+
+  public void destroy() {}
+
+  public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+
+    HttpServletRequest request      = (HttpServletRequest)servletRequest;
+    HttpServletResponse response    = (HttpServletResponse)servletResponse;   
+        
+    response.setHeader("Content-Encoding", "gzip");
+
+    chain.doFilter(request, response);
+  }
+
+  public void init(FilterConfig filterConfig) throws ServletException {}
+}
+```
+**然后修改 tomcat\conf\web.xml，重启 tomcat**
+```xml
+<filter>
+  <filter-name>gzipFilter</filter-name>
+  <filter-class>cn.common.java.utility.gzipFilter</filter-class>
+</filter>
+
+<filter-mapping>
+  <filter-name>gzipFilter</filter-name>
+  <url-pattern>*.gz</url-pattern>
+</filter-mapping>
+```
 # iis
 $\color{red}{* 我们已经事先给每个离线数据包做好了此配置，如果你使用iis服务器则不需要再做此配置。}$  
 **在含有.gz文件的目录中添加配置文件 web.config，内容如下：**
