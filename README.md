@@ -114,11 +114,12 @@ $\color{red}{* 我们已经事先给每个离线数据包做好了此配置，�
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <system.webServer>
-        <httpProtocol>
-            <customHeaders>
-                <add name="Content-Encoding" value="gzip" />
-            </customHeaders>
-        </httpProtocol>
+        <directoryBrowse enabled="true" />
+        <staticContent>
+            <remove fileExtension=".gz" />
+            <mimeMap fileExtension=".json" mimeType="text/json" />
+            <mimeMap fileExtension=".gz" mimeType="application/octet-stream" />
+        </staticContent>
     </system.webServer>
 </configuration>
 ```
